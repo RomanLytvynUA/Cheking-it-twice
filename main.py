@@ -7,6 +7,7 @@ class Game:
     def __init__(self):
         pygame.init()
         pygame.font.init()
+        pygame.mixer.init()
 
         self.screen = pygame.display.set_mode(MIN_SCREEN_SIZE, pygame.RESIZABLE)
 

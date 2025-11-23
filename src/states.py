@@ -22,6 +22,8 @@ class MenuState(State):
         super().__init__(game, assets)
         self.santa = Santa(self.assets, 100, 300)
         
+        pygame.mixer.music.load(assets.audio['menu_path'])
+        pygame.mixer.music.play(-1)
 
         sw = self.assets.images['sky'].get_width()
 
@@ -43,9 +45,10 @@ class MenuState(State):
     
     def handle_event(self, event):
         if self.start_btn.handle_event(event):
+            pygame.mixer.music.fadeout(500)
             self.game.state = GameState(self.game, self.assets)
         elif self.settings_btn.handle_event(event):
-            pass
+            pygame.mixer.music.fadeout(500)
         elif self.exit_btn.handle_event(event):
             return 1
 

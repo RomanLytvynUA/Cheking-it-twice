@@ -6,6 +6,7 @@ class Assets:
     def __init__(self):
         self.images = {}
         self.fonts = {}
+        self.audio = {}
 
     def resize(self, surface, size):
         return pygame.transform.smoothscale(surface, size)
@@ -15,6 +16,8 @@ class Assets:
                                                          int(GAME_SIZE[0]*percentage/surface.get_width()*surface.get_height())))
 
     def load(self):
+        self.audio['menu_path'] = os.path.join(ASSETS_DIR, 'audio', 'menu.ogg')
+
         self.fonts['main'] = pygame.font.Font(os.path.join(ASSETS_DIR, 'fonts', 'main.ttf'), int(GAME_SIZE[0]*0.035))
 
         self.images['icon'] = pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'ui', 'start_icon.png')).convert_alpha()
