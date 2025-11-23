@@ -5,13 +5,30 @@ from .settings import ASSETS_DIR, GAME_SIZE
 class Assets:
     def __init__(self):
         self.images = {}
+        self.fonts = {}
+
+    def resize(self, surface, size):
+        return pygame.transform.smoothscale(surface, size)
     
+    def adapt(self, surface, percentage):
+        return pygame.transform.smoothscale(surface, (int(GAME_SIZE[0]*percentage), 
+                                                         int(GAME_SIZE[0]*percentage/surface.get_width()*surface.get_height())))
+
     def load(self):
-        icon_path = os.path.join(ASSETS_DIR, 'graphics', 'ui', 'start_icon.png')
+        self.fonts['main'] = pygame.font.Font(os.path.join(ASSETS_DIR, 'fonts', 'main.ttf'), int(GAME_SIZE[0]*0.035))
 
-        sky_path = os.path.join(ASSETS_DIR, 'graphics', 'background', 'sky.png')
+        self.images['icon'] = pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'ui', 'start_icon.png')).convert_alpha()
+        self.images['cursor'] = self.adapt(pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'ui', 'cursor.png')).convert_alpha(), 0.02)
+        self.images['btn'] = self.adapt(pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'ui', 'btn.png')).convert_alpha(), 0.25)
+        self.images['btn_active'] = self.resize(pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'ui', 'btn_active.png')).convert_alpha(), self.images['btn'].get_size())
 
-        self.images['icon'] = pygame.image.load(icon_path).convert_alpha()
+        self.images['sky'] = self.resize(pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'background', 'sky.png')).convert(), GAME_SIZE)
 
-        self.images['sky'] = pygame.image.load(sky_path).convert()
-        self.images['sky'] = pygame.transform.smoothscale(self.images['sky'], GAME_SIZE)
+        self.images['menu_fg'] =  self.resize(pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'ui', 'menu_fg.png')).convert_alpha(), GAME_SIZE)
+
+        self.images['title'] = self.adapt(pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'ui', 'title.png')).convert_alpha(), 0.4)
+
+        self.images['santa_idle'] = []
+        for i in range(4):
+            self.images['santa_idle'].append(self.adapt(pygame.image.load(os.path.join(ASSETS_DIR, 'graphics', 'sprites', f'santa_idle{i}.png')).convert_alpha(), 0.25))
+        
